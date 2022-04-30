@@ -7,7 +7,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "ru.netology.nmedia"
+        applicationId "ru.netology.NMedia"
         minSdk 23
         targetSdk 32
         versionCode 1
