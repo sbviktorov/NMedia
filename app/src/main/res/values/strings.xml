@@ -6,5 +6,7 @@
     <string name="button_of_likes">button_of_likes</string>
     <string name="button_of_shares">button_of_shares</string>
     <string name="button_of_views">button_of_views</string>
+    <string name="preposition" translatable="false">at</string>
+
 
 </resources>
