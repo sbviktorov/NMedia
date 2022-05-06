@@ -2,10 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master, main, 02_resources ]
+    branches: [ master, main ]
   pull_request:
-    branches: [ master, main, 02_resources ]
-
+    branches: [ master, main ]
 jobs:
   build:
     runs-on: ubuntu-20.04

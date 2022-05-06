@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/common_spacing">
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/post_avatar_size"
+        android:layout_height="@dimen/post_avatar_size"
+        android:contentDescription="@string/description_of_author"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/authorName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="#00008b"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/dateOfPost"
+        app:layout_constraintEnd_toStartOf="@id/options_of_post"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Нетология. Университет интернет-профессий" />
+
+    <TextView
+        android:id="@+id/dateOfPost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        app:layout_constraintBottom_toBottomOf="@id/avatar"
+        app:layout_constraintEnd_toEndOf="@id/authorName"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toBottomOf="@id/authorName"
+        tools:text="21 мая в 18:36" />
+
+    <ImageButton
+        android:id="@+id/options_of_post"
+        android:contentDescription="@string/options_of_post"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_baseline_more_vert_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/avatar"
+        app:tint="#FF696969" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/header_barrier"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="avatar, dateOfPost, options_of_post"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="64dp" />
+
+    <TextView
+        android:id="@+id/text_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/header_barrier"
+        tools:text="Привет, это новая Нетология!\n\nКогда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов.
+\n\nНо самое важное остаётся с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия — помочь встать на путь роста и начать цепочку перемен → http://netolo.gy/fyb" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_for_actions"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="text_block" />
+
+    <ImageButton
+        android:id="@+id/button_of_likes"
+        android:contentDescription="@string/button_of_likes"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"
+        app:srcCompat="@drawable/ic_like_24"
+        tools:layout_editor_absoluteY="290dp" />
+
+    <ImageButton
+        android:id="@+id/button_of_shares"
+        android:contentDescription="@string/button_of_shares"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/action_spacing"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toEndOf="@id/quantity_of_likes"
+        app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"
+        app:srcCompat="@drawable/ic_baseline_share_24"
+        tools:layout_editor_absoluteX="139dp"
+        tools:layout_editor_absoluteY="291dp" />
+
+    <ImageButton
+        android:id="@+id/button_of_views"
+        android:contentDescription="@string/button_of_views"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="@dimen/action_spacing"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toStartOf="@id/quantity_of_views"
+        app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"
+        app:srcCompat="@drawable/ic_baseline_eye_24" />
+
+    <TextView
+        android:id="@+id/quantity_of_likes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/action_spacing"
+        app:layout_constraintStart_toEndOf="@id/button_of_likes"
+        app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"
+
+        tools:text="10"
+
+        />
+
+    <TextView
+        android:id="@+id/quantity_of_shares"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/action_spacing"
+        app:layout_constraintStart_toEndOf="@id/button_of_shares"
+        app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"
+        tools:text="5"
+
+
+        />
+
+    <TextView
+        android:id="@+id/quantity_of_views"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"
+        tools:text="5" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
