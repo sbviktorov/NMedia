@@ -40,12 +40,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.nestedPost.buttonOfLikes.setOnClickListener {
-            println("buttonOfLikes clicked")
             viewModel.onButtonOfLikeClicked()
         }
 
         binding.nestedPost.buttonOfShares.setOnClickListener {
-            println("buttonOfShares clicked")
             viewModel.onButtonOfSharesClicked()
         }
     }
