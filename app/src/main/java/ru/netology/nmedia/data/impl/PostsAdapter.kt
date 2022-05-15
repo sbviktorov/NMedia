@@ -2,66 +2,53 @@ package ru.netology.nmedia.data.impl
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.PostListItemBinding
 import ru.netology.nmedia.socialNetwork.Post
-import ru.netology.nmedia.socialNetwork.calculations.activitiesCountFormat
 import ru.netology.nmedia.socialNetwork.calculations.dateFormatting
-import kotlin.properties.Delegates
+
+typealias OnPostButtonClicked = (Post) -> Unit
 
 internal class PostsAdapter(
 
-    //private val onLikeClicked: (Post) -> Unit
-private val onButtonOfLikeClicked: (Post) -> Unit,
-    private val onButtonOfSharesClicked: (Post) -> Unit
-): RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
-    var posts: List<Post> by Delegates.observable(emptyList()) {_, _, _ -> notifyDataSetChanged()}
+    private val onButtonOfLikeClicked: OnPostButtonClicked,
+    private val onButtonOfSharesClicked: OnPostButtonClicked
+) : ListAdapter<Post, PostsAdapter.ViewHolder>(DiffCallback) {
 
     inner class ViewHolder(
         private val binding: PostListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+        private lateinit var post: Post
 
-        fun bind(post: Post) = with(binding) {
-            authorName.text = post.ownerName
-            dateOfPost.text = dateFormatting(post.date)
-            textBlock.text = post.text
-            quantityOfShares.text = post.reposts.toString()
-            quantityOfViews.text = post.views.toString()
-            //quantityOfLikes.text = activitiesCountFormat(post.likes.count)
-            quantityOfLikes.text = post.likes.count.toString()
-            buttonOfLikes.setImageResource(
-                if (post.likes.userLikes) {
-                    ru.netology.nmedia.R.drawable.ic_liked_24
-                } else {
-                    ru.netology.nmedia.R.drawable.ic_like_24
-                }
-            )
-            buttonOfLikes.setOnClickListener { onButtonOfLikeClicked(post) }
-//            buttonOfLikes.setOnClickListener { viewModel.onButtonOfLikeClicked(post.id)
-//                println("ButtonOfLike Post ${post.id} clicked")
-//            }
-            buttonOfShares.setOnClickListener {
+        init {
+            binding.buttonOfLikes.setOnClickListener { onButtonOfLikeClicked(post) }
+            binding.buttonOfShares.setOnClickListener {
                 onButtonOfSharesClicked(post)
-                //            buttonOfShares.setOnClickListener {
-//                viewModel.onButtonOfSharesClicked(post.id)
-//                println("ButtonOfShares Post ${post.id} clicked")
-//            }
             }
         }
 
-//        fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-//            val inflater = LayoutInflater.from(parent.context)
-//            val binding = PostListItemBinding.inflate(inflater, parent, false)
-//            return ViewHolder(binding)
-//        }
-//
-//        fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//            holder.bind(posts[position])
-//        }
-//
-//        fun getItemCount() = posts.size
+        fun bind(post: Post) {
+            this.post = post
 
+            with(binding) {
+                authorName.text = post.ownerName
+                dateOfPost.text = dateFormatting(post.date)
+                textBlock.text = post.text
+                quantityOfShares.text = post.reposts.toString()
+                quantityOfViews.text = post.views.toString()
+                quantityOfLikes.text = post.likes.count.toString()
+                buttonOfLikes.setImageResource(
+                    if (post.likes.userLikes) {
+                        R.drawable.ic_liked_24
+                    } else {
+                        R.drawable.ic_like_24
+                    }
+                )
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -71,8 +58,14 @@ private val onButtonOfLikeClicked: (Post) -> Unit,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(posts[position])    }
+        holder.bind(getItem(position))
+    }
 
-    override fun getItemCount() = posts.size
+    private object DiffCallback : DiffUtil.ItemCallback<Post>() {
+        override fun areItemsTheSame(oldItem: Post, newItem: Post) =
+            oldItem.id == newItem.id
 
+        override fun areContentsTheSame(oldItem: Post, newItem: Post) =
+            oldItem == newItem
+    }
 }

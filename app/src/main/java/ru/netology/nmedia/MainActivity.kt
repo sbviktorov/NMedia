@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = PostsAdapter(viewModel::onButtonOfLikeClicked, viewModel::onButtonOfSharesClicked)
         binding.postsRecyclerView.adapter = adapter
         viewModel.data.observe(this) { posts ->
-            adapter.posts = posts}
+            adapter.submitList(posts)}
 
 
 
