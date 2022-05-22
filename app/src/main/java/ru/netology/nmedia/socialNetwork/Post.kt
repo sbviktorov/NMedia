@@ -6,10 +6,10 @@ import java.util.*
 data class Post(
     val id: Int,
     val ownerName: String,
-    val date: Long = 1590086160000,
+    val date: Long = Date().time,
     val text: String,
     val likes: Likes = Likes(),
-    var reposts: Int = 5,
-    val views: Int = 5
+    var reposts: Int = 0,
+    val views: Int = 0
 ) {
 }
