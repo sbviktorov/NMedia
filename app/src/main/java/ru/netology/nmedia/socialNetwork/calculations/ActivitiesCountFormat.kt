@@ -3,7 +3,7 @@ package ru.netology.nmedia.socialNetwork.calculations
 fun activitiesCountFormat(count: Int): String {
 
     when (count) {
-        0 -> return ""
+        0 -> return "0"
         in 1..999 -> return count.toString()
         in 1_000..9_999 -> {
             return if ((count % 1000) < 100) {

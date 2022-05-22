@@ -8,11 +8,14 @@ import ru.netology.nmedia.socialNetwork.objects.Likes
 
 class InMemoryPostRepository : PostRepository {
 
+    private val ownerName = "Нетология. Университет интернет-профессий"
+
+    private var nextID = 0
 
     private var standartPosts = listOf<Post>(
         Post(
-            id = 0,
-            ownerName = "Нетология. Университет интернет-профессий",
+            id = nextID++,
+            ownerName = ownerName,
             text = "Привет, это новая Нетология!\n\nКогда-то Нетология начиналась с интенсивов по " +
                     "онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и " +
                     "управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных " +
@@ -26,8 +29,8 @@ class InMemoryPostRepository : PostRepository {
             views = 5
         ),
         Post(
-            id = 1,
-            ownerName = "Нетология. Университет интернет-профессий",
+            id = nextID++,
+            ownerName = ownerName,
             text = "Привет, это новая Нетология!\n\nКогда-то Нетология начиналась с интенсивов по " +
                     "онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и " +
                     "управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных " +
@@ -39,22 +42,39 @@ class InMemoryPostRepository : PostRepository {
         )
     )
 
-    private val additionalPosts = List(20) { index ->
+    private val additionalPosts = List(20) {
         Post(
-            id = 2 + index, ownerName = "Нетология. Университет интернет-профессий",
-            text = "some text. index of additionalPosts= $index"
+            //id = 2 + index,
+            id = nextID++,
+            ownerName = ownerName,
+            text = "some text. id of additionalPosts= ${nextID-1}",
+            likes = Likes(
+                count = listOf<Int>(
+                    0,
+                    999,
+                    1_099,
+                    9_999,
+                    999_999,
+                    1_199_999,
+                    1_999_999,
+                    9_999_999
+                ).random()
+            )
+
         )
     }
 
     private var posts = standartPosts.plus(additionalPosts)
 
+    //private var nextID = posts.last().id + 1
+
     private val data = MutableLiveData(posts)
 
     override fun getAll(): LiveData<List<Post>> = data
 
-    override fun likeById(id: Int) {
+    override fun likeById(postId: Int) {
         posts = posts.map {
-            if (it.id != id) it else it.copy(
+            if (it.id != postId) it else it.copy(
                 likes = Likes(
                     userLikes = !it.likes.userLikes,
                     count = if (it.likes.userLikes) {
@@ -68,13 +88,47 @@ class InMemoryPostRepository : PostRepository {
         data.value = posts
     }
 
-    override fun shareById(id: Int) {
+    override fun shareById(postId: Int) {
         posts = posts.map {
-            if (it.id != id) it else {
+            if (it.id != postId) it else {
                 it.copy(reposts = it.reposts + 1)
             }
         }
         data.value = posts
+    }
+
+    override fun deleteById(postId: Int) {
+        posts = posts.filterNot { it.id == postId }
+        data.value = posts
+    }
+
+    override fun save(post: Post) {
+        if (post.id == PostRepository.newPostID) insert(post) else update(post)
+    }
+
+
+
+    private fun insert(post: Post) {
+        posts = listOf<Post>().plus(
+//            Post(
+//            id = nextID++,
+//            ownerName = ownerName,
+//            text =post.text))
+            post.copy(
+                //text = post.text.plus(" id = $nextID"),
+                id = nextID++
+            )
+        )
+            .plus(posts)
+        data.value = posts
+
+    }
+
+    private fun update(post: Post) {
+        posts = posts.map { if (it.id == post.id) post else it }
+        data.value = posts
+
+
     }
 
 

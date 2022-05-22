@@ -45,10 +45,10 @@
 
     <ImageButton
         android:id="@+id/options_of_post"
-        android:contentDescription="@string/options_of_post"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/options_of_post"
         android:src="@drawable/ic_baseline_more_vert_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/avatar"
@@ -81,10 +81,10 @@
 
     <ImageButton
         android:id="@+id/button_of_likes"
-        android:contentDescription="@string/button_of_likes"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/button_of_likes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"
         app:srcCompat="@drawable/ic_like_24"
@@ -92,12 +92,12 @@
 
     <ImageButton
         android:id="@+id/button_of_shares"
-        android:contentDescription="@string/button_of_shares"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginStart="@dimen/action_spacing"
+        android:layout_marginStart="45dp"
         android:background="@android:color/transparent"
-        app:layout_constraintStart_toEndOf="@id/quantity_of_likes"
+        android:contentDescription="@string/button_of_shares"
+        app:layout_constraintStart_toEndOf="@id/button_of_likes"
         app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"
         app:srcCompat="@drawable/ic_baseline_share_24"
         tools:layout_editor_absoluteX="139dp"
@@ -105,11 +105,11 @@
 
     <ImageButton
         android:id="@+id/button_of_views"
-        android:contentDescription="@string/button_of_views"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginEnd="@dimen/action_spacing"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/button_of_views"
         app:layout_constraintEnd_toStartOf="@id/quantity_of_views"
         app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"
         app:srcCompat="@drawable/ic_baseline_eye_24" />
