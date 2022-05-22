@@ -12,8 +12,6 @@ import ru.netology.nmedia.socialNetwork.Post
 import ru.netology.nmedia.socialNetwork.calculations.activitiesCountFormat
 import ru.netology.nmedia.socialNetwork.calculations.dateFormatting
 
-//typealias OnPostButtonClicked = (Post) -> Unit
-
 internal class PostsAdapter(
     private val interactionListener: PostInteractionListener
 ) : ListAdapter<Post, PostsAdapter.ViewHolder>(DiffCallback) {
@@ -63,7 +61,8 @@ internal class PostsAdapter(
                 textBlock.text = post.text
                 quantityOfShares.text = post.reposts.toString()
                 quantityOfViews.text = post.views.toString()
-                quantityOfLikes.text = activitiesCountFormat(post.likes.count)//post.likes.count.toString()
+                quantityOfLikes.text =
+                    activitiesCountFormat(post.likes.count)
                 buttonOfLikes.setImageResource(
                     if (post.likes.userLikes) {
                         R.drawable.ic_liked_24

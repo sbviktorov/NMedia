@@ -11,42 +11,76 @@
         android:id="@+id/postsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/toolsTopBarrier"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/toolsTopBarrier"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         tools:context=".MainActivity"
-        tools:listitem="@layout/post_list_item"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:listitem="@layout/post_list_item" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/editToolGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="cancelEditButton, lastContent" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/toolsTopBarrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="top"
-        app:constraint_referenced_ids="contentEditText, saveButton" />
+        app:constraint_referenced_ids="lastContent, cancelEditButton" />
+
+    <TextView
+        android:id="@+id/lastContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:padding="@dimen/common_spacing"
+        android:singleLine="true"
+        app:layout_constraintBottom_toBottomOf="@id/cancelEditButton"
+        app:layout_constraintEnd_toStartOf="@id/cancelEditButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toolsTopBarrier"
+        tools:text="Привет, это новая Нетология!\n\nКогда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов.
+\n\nНо самое важное остаётся с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия — помочь встать на путь роста и начать цепочку перемен → http://netolo.gy/fyb" />
+
+    <ImageButton
+        android:id="@+id/cancelEditButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toolsTopBarrier"
+        app:srcCompat="@drawable/ic_cancel_48" />
+
     <EditText
         android:id="@+id/contentEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/post_text"
-        android:inputType="textMultiLine"
+        android:maxHeight="200dp"
         android:background="@android:color/transparent"
-        android:padding="@dimen/common_spacing"
+        android:hint="@string/post_text"
         android:importantForAutofill="no"
-        app:layout_constraintTop_toTopOf="@id/toolsTopBarrier"
+        android:inputType="textMultiLine"
+        android:padding="@dimen/common_spacing"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/saveButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/saveButton"/>
+        app:layout_constraintTop_toBottomOf="@id/cancelEditButton"
+        />
+
     <ImageButton
         android:id="@+id/saveButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/toolsTopBarrier"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@android:color/transparent"
-        app:srcCompat="@drawable/ic_save_48"
-       />
-
+        app:layout_constraintTop_toBottomOf="@id/cancelEditButton"
+        app:srcCompat="@drawable/ic_save_48" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
