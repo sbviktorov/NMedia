@@ -79,16 +79,28 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="text_block" />
 
-    <ImageButton
+    <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/button_of_likes"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/button_of_likes"
+        style="@style/Widget.AppTheme.LikeCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"
-        app:srcCompat="@drawable/ic_like_24"
-        tools:layout_editor_absoluteY="290dp" />
+        android:button="@drawable/ic_like_24dp"
+        android:contentDescription="@string/button_of_likes"
+        android:text="100"
+        />
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/button_of_likes"-->
+<!--        android:layout_width="24dp"-->
+<!--        android:layout_height="24dp"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        android:contentDescription="@string/button_of_likes"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"-->
+<!--        app:srcCompat="@drawable/ic_like_24"-->
+<!--        tools:layout_editor_absoluteY="290dp" />-->
 
     <ImageButton
         android:id="@+id/button_of_shares"
