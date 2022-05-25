@@ -5,7 +5,6 @@ on:
     branches: [ master, main, 07_crud ]
   pull_request:
     branches: [ master, main, 07_crud ]
-
 jobs:
   build:
     runs-on: ubuntu-20.04
