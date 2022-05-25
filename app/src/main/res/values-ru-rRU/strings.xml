@@ -3,9 +3,12 @@
     <string name="app_name">НМедиа</string>
     <string name="greetings">НМедиа!</string>
     <string name="description_of_author">Аватар автора</string>
-    <string name="options_of_post">меню_поста</string>
-    <string name="button_of_likes">кнопка_лайков</string>
-    <string name="button_of_shares">кнопка_поделиться</string>
-    <string name="button_of_views">кнопка_просмотров</string>
-
+    <string name="options_of_post">Меню поста</string>
+    <string name="button_of_likes">Лайки</string>
+    <string name="button_of_shares">Поделиться</string>
+    <string name="button_of_views">Просмотры</string>
+    <string name="remove">Удалить</string>
+    <string name="post_text">Текст поста</string>
+    <string name="menu_edit">Редактировать</string>
+    <string name="empty_content">Поле не должно быть пустым</string>
 </resources>

@@ -1,21 +1,19 @@
-package ru.netology.nmedia.data.impl
+package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.PostListItemBinding
 import ru.netology.nmedia.socialNetwork.Post
+import ru.netology.nmedia.socialNetwork.calculations.activitiesCountFormat
 import ru.netology.nmedia.socialNetwork.calculations.dateFormatting
 
-typealias OnPostButtonClicked = (Post) -> Unit
-
 internal class PostsAdapter(
-
-    private val onButtonOfLikeClicked: OnPostButtonClicked,
-    private val onButtonOfSharesClicked: OnPostButtonClicked
+    private val interactionListener: PostInteractionListener
 ) : ListAdapter<Post, PostsAdapter.ViewHolder>(DiffCallback) {
 
     inner class ViewHolder(
@@ -23,10 +21,34 @@ internal class PostsAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         private lateinit var post: Post
 
+        private val popupMenu by lazy {
+            PopupMenu(itemView.context, binding.optionsOfPost).apply {
+                inflate(R.menu.options_post)
+                setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.remove -> {
+                            interactionListener.onRemoveClicked(post)
+                            true
+                        }
+                        R.id.edit -> {
+                            interactionListener.onEditClicked(post)
+                            true
+                        }
+
+                        else -> false
+                    }
+                }
+            }
+        }
+
         init {
-            binding.buttonOfLikes.setOnClickListener { onButtonOfLikeClicked(post) }
+            binding.buttonOfLikes.setOnClickListener {
+                interactionListener.onButtonOfLikesClicked(
+                    post
+                )
+            }
             binding.buttonOfShares.setOnClickListener {
-                onButtonOfSharesClicked(post)
+                interactionListener.onButtonOfSharesClicked(post)
             }
         }
 
@@ -39,7 +61,8 @@ internal class PostsAdapter(
                 textBlock.text = post.text
                 quantityOfShares.text = post.reposts.toString()
                 quantityOfViews.text = post.views.toString()
-                quantityOfLikes.text = post.likes.count.toString()
+                quantityOfLikes.text =
+                    activitiesCountFormat(post.likes.count)
                 buttonOfLikes.setImageResource(
                     if (post.likes.userLikes) {
                         R.drawable.ic_liked_24
@@ -47,6 +70,7 @@ internal class PostsAdapter(
                         R.drawable.ic_like_24
                     }
                 )
+                optionsOfPost.setOnClickListener { popupMenu.show() }
             }
         }
     }

@@ -7,6 +7,9 @@
     <string name="button_of_shares">button_of_shares</string>
     <string name="button_of_views">button_of_views</string>
     <string name="preposition" translatable="false">at</string>
-
+    <string name="remove">Remove</string>
+    <string name="post_text">Post text</string>
+    <string name="menu_edit">Edit</string>
+    <string name="empty_content">Content can\'t be empty</string>
 
 </resources>
