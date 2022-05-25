@@ -60,21 +60,11 @@ internal class PostsAdapter(
                 authorName.text = post.ownerName
                 dateOfPost.text = dateFormatting(post.date)
                 textBlock.text = post.text
-                quantityOfShares.text = post.reposts.toString()
+                buttonOfShares.text = post.reposts.toString()
                 quantityOfViews.text = post.views.toString()
-                buttonOfLikes.text=
+                buttonOfLikes.text =
                     activitiesCountFormat(post.likes.count)
                 buttonOfLikes.isChecked = post.likes.userLikes
-                quantityOfLikes.text =
-                    activitiesCountFormat(post.likes.count)
-//                buttonOfLikes.setButtonDrawable(
-//                    if (post.likes.userLikes) {
-//                        R.drawable.ic_liked_24
-//                    } else {
-//                        R.drawable.ic_like_24
-//                    }
-//                )
-
             }
         }
     }
