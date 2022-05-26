@@ -48,7 +48,7 @@ internal class PostsAdapter(
                 )
             }
             binding.buttonOfShares.setOnClickListener {
-                interactionListener.onButtonOfSharesClicked(post)
+                interactionListener.onButtonOfShesClicked(post)
             }
             binding.optionsOfPost.setOnClickListener { popupMenu.show() }
         }

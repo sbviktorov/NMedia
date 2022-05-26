@@ -11,5 +11,6 @@
     <string name="post_text">Post text</string>
     <string name="menu_edit">Edit</string>
     <string name="empty_content">Content can\'t be empty</string>
+    <string name="chooser_share_post">Share post</string>
 
 </resources>
