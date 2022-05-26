@@ -50,6 +50,7 @@ internal class PostsAdapter(
             binding.buttonOfShares.setOnClickListener {
                 interactionListener.onButtonOfSharesClicked(post)
             }
+            binding.optionsOfPost.setOnClickListener { popupMenu.show() }
         }
 
         fun bind(post: Post) {
@@ -59,18 +60,11 @@ internal class PostsAdapter(
                 authorName.text = post.ownerName
                 dateOfPost.text = dateFormatting(post.date)
                 textBlock.text = post.text
-                quantityOfShares.text = post.reposts.toString()
+                buttonOfShares.text = post.reposts.toString()
                 quantityOfViews.text = post.views.toString()
-                quantityOfLikes.text =
+                buttonOfLikes.text =
                     activitiesCountFormat(post.likes.count)
-                buttonOfLikes.setImageResource(
-                    if (post.likes.userLikes) {
-                        R.drawable.ic_liked_24
-                    } else {
-                        R.drawable.ic_like_24
-                    }
-                )
-                optionsOfPost.setOnClickListener { popupMenu.show() }
+                buttonOfLikes.isChecked = post.likes.userLikes
             }
         }
     }
