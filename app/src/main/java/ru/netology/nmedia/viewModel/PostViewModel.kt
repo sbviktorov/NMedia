@@ -13,6 +13,7 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     private val ownerName = "Нетология. Университет интернет-профессий"
 
     val sharePostContent = SingleLiveEvent<String>()
+    val navigateToPostContentScreenEvent = SingleLiveEvent<Unit>()
     val currentPost = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(content: String): Boolean {
@@ -23,7 +24,6 @@ class PostViewModel : ViewModel(), PostInteractionListener {
             text = content
         )
             ?: Post(
-
                 id = PostRepository.newPostID,
                 ownerName = ownerName,
                 text = content
@@ -33,12 +33,17 @@ class PostViewModel : ViewModel(), PostInteractionListener {
         return true
     }
 
+    fun onAddClicked() {
+        navigateToPostContentScreenEvent.call()
+    }
+
     // region PostInteractionListener
     override fun onButtonOfLikesClicked(post: Post) = repository.likeById(post.id)
     override fun onButtonOfSharesClicked(post: Post) {
-        repository.shareById(post.id)
         sharePostContent.value = post.text
+        repository.shareById(post.id)
     }
+
     override fun onRemoveClicked(post: Post) = repository.deleteById(post.id)
     override fun onEditClicked(post: Post) {
         currentPost.value = post
@@ -48,5 +53,7 @@ class PostViewModel : ViewModel(), PostInteractionListener {
         repository.cancelUpdate()
         currentPost.value = null
     }
+
+
 //    endregion PostInteractionListener
 }
