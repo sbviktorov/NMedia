@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 //                ).show()
 //            }
         }
+
 //        binding.cancelEditButton.setOnClickListener {
 //            viewModel.onCancelEditButtonClicked()
 //        }
@@ -71,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         val postContentActivityLauncher =
             registerForActivityResult(PostContentActivity.ResultContract) { postContent ->
                 postContent ?: return@registerForActivityResult
-                val result = viewModel.onSaveButtonClicked(postContent)
+                viewModel.onSaveButtonClicked(postContent)
             }
         viewModel.navigateToPostContentScreenEvent.observe(this) {
             postContentActivityLauncher.launch()
