@@ -16,6 +16,15 @@ class InMemoryPostRepository : PostRepository {
         Post(
             id = nextID++,
             ownerName = ownerName,
+            text = "Задача YouTube Video",
+            likes = Likes(count = 0, userLikes = false),
+            reposts = 0,
+            views = 0,
+            youtubeLink = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
+        ),
+        Post(
+            id = nextID++,
+            ownerName = ownerName,
             text = "Привет, это новая Нетология!\n\nКогда-то Нетология начиналась с интенсивов по " +
                     "онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и " +
                     "управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных " +
@@ -142,6 +151,11 @@ class InMemoryPostRepository : PostRepository {
     }
 
     override fun cancelUpdate() {
+        data.value = posts
+    }
+
+    private fun editPost(post: Post) {
+        posts = posts.map { if (it.id == post.id) post else it }
         data.value = posts
     }
 }

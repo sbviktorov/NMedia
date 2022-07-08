@@ -13,8 +13,11 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     private val ownerName = "Нетология. Университет интернет-профессий"
 
     val sharePostContent = SingleLiveEvent<String>()
-    val navigateToPostContentScreenEvent = SingleLiveEvent<Unit>()
+//    val navigateToPostContentScreenEvent = SingleLiveEvent<Unit>()
+    val navigateToPostContentScreenEvent = SingleLiveEvent<String?>()
+
     val currentPost = MutableLiveData<Post?>(null)
+    val editPost = SingleLiveEvent<String>()
 
     fun onSaveButtonClicked(content: String): Boolean {
         if (content.isBlank()) {
@@ -34,7 +37,8 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     }
 
     fun onAddClicked() {
-        navigateToPostContentScreenEvent.call()
+//        navigateToPostContentScreenEvent.call()
+        navigateToPostContentScreenEvent.value = null
     }
 
     // region PostInteractionListener
@@ -47,6 +51,8 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     override fun onRemoveClicked(post: Post) = repository.deleteById(post.id)
     override fun onEditClicked(post: Post) {
         currentPost.value = post
+        navigateToPostContentScreenEvent.value = post.text
+//        navigateToPostContentScreenEvent.call()
     }
 
     override fun onCancelEditButtonClicked() {

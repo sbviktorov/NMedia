@@ -1,16 +1,12 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import androidx.activity.result.launch
 import androidx.activity.viewModels
-import ru.netology.nmedia.activity.PostContentActivity
+import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
-import ru.netology.nmedia.util.hideKeyboard
 import ru.netology.nmedia.viewModel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -58,6 +54,7 @@ class MainActivity : AppCompatActivity() {
 //                }
 //            }
 //        }
+
         viewModel.sharePostContent.observe(this) { postContent ->
             val intent = Intent().apply {
                 action = Intent.ACTION_SEND
@@ -69,13 +66,19 @@ class MainActivity : AppCompatActivity() {
                 Intent.createChooser(intent, getString(R.string.chooser_share_post))
             startActivity(shareIntent)
         }
-        val postContentActivityLauncher =
-            registerForActivityResult(PostContentActivity.ResultContract) { postContent ->
-                postContent ?: return@registerForActivityResult
-                viewModel.onSaveButtonClicked(postContent)
-            }
+
+//        val postContentActivityLauncher =
+//            registerForActivityResult(PostContentActivity.ResultContract) { postContent ->
+//                postContent ?: return@registerForActivityResult
+//                viewModel.onSaveButtonClicked(postContent)
+//            }
+        val postContentActivityLauncher = registerForActivityResult(
+            PostContentActivity.ResultContract
+        ) { postContent: String? ->
+            postContent?.let(viewModel::onSaveButtonClicked) ?: return@registerForActivityResult
+        }
         viewModel.navigateToPostContentScreenEvent.observe(this) {
-            postContentActivityLauncher.launch()
+            postContentActivityLauncher.launch(it)
         }
     }
 }

@@ -1,5 +1,6 @@
 package ru.netology.nmedia.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -31,6 +32,12 @@ internal class PostsAdapter(
                             true
                         }
                         R.id.edit -> {
+//                            val intent = Intent().apply {
+//                                action = Intent.ACTION_SEND
+//                                putExtra(Intent.EXTRA_TEXT, post.text) //post.text
+//                                type = "text/plain"
+//                            }
+
                             interactionListener.onEditClicked(post)
                             true
                         }

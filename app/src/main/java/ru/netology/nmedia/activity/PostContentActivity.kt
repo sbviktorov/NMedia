@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.PostContentActivityBinding
 
@@ -15,7 +16,13 @@ class PostContentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = PostContentActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var textContent = ""
+        if (intent.hasExtra(POST_CONTENT_KEY)) {
+            textContent = intent.getStringExtra(POST_CONTENT_KEY).toString()
+        }
+        binding.edit.setText(textContent)
         binding.edit.requestFocus()
+
 
         binding.ok.setOnClickListener {
             val intent = Intent()
@@ -35,9 +42,17 @@ class PostContentActivity : AppCompatActivity() {
         }
     }
 
-    object ResultContract : ActivityResultContract<Unit, String?>() {
-        override fun createIntent(context: Context, input: Unit): Intent =
-            Intent(context, PostContentActivity::class.java)
+    //    object ResultContract : ActivityResultContract<Unit, String?>() {
+//        override fun createIntent(context: Context, input: Unit): Intent =
+//            Intent(context, PostContentActivity::class.java)
+    object ResultContract : ActivityResultContract<String?, String?>() {
+        override fun createIntent(context: Context, input: String?): Intent {
+            val intent = Intent(context, PostContentActivity::class.java)
+            if (input != null) {
+                intent.putExtra(POST_CONTENT_KEY, input)
+            }
+            return intent
+        }
 
         override fun parseResult(resultCode: Int, intent: Intent?) =
             if (resultCode == Activity.RESULT_OK) {
@@ -47,5 +62,6 @@ class PostContentActivity : AppCompatActivity() {
 
     private companion object {
         private const val RESULT_KEY = "postNewContent"
+        private const val POST_CONTENT_KEY = "postContent"
     }
 }
