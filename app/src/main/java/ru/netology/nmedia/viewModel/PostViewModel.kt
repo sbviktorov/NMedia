@@ -14,11 +14,8 @@ class PostViewModel : ViewModel(), PostInteractionListener {
 
     val sharePostContent = SingleLiveEvent<String>()
     val youtubeURL = SingleLiveEvent<String>()
-//    val navigateToPostContentScreenEvent = SingleLiveEvent<Unit>()
     val navigateToPostContentScreenEvent = SingleLiveEvent<String?>()
-
-    val currentPost = MutableLiveData<Post?>(null)
-    val editPost = SingleLiveEvent<String>()
+    private val currentPost = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(content: String): Boolean {
         if (content.isBlank()) {
@@ -38,7 +35,6 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     }
 
     fun onAddClicked() {
-//        navigateToPostContentScreenEvent.call()
         navigateToPostContentScreenEvent.value = null
     }
 
@@ -53,7 +49,6 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     override fun onEditClicked(post: Post) {
         currentPost.value = post
         navigateToPostContentScreenEvent.value = post.text
-//        navigateToPostContentScreenEvent.call()
     }
 
     override fun onCancelEditButtonClicked() {
@@ -64,7 +59,5 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     override fun onPlayButtonClicked(post: Post) {
         youtubeURL.value = post.video!!
     }
-
-
 //    endregion PostInteractionListener
 }
