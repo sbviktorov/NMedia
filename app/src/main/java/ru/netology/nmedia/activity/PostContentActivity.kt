@@ -4,11 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
-import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.PostContentActivityBinding
 
 class PostContentActivity : AppCompatActivity() {
@@ -42,9 +39,6 @@ class PostContentActivity : AppCompatActivity() {
         }
     }
 
-    //    object ResultContract : ActivityResultContract<Unit, String?>() {
-//        override fun createIntent(context: Context, input: Unit): Intent =
-//            Intent(context, PostContentActivity::class.java)
     object ResultContract : ActivityResultContract<String?, String?>() {
         override fun createIntent(context: Context, input: String?): Intent {
             val intent = Intent(context, PostContentActivity::class.java)

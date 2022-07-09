@@ -75,23 +75,23 @@
         android:id="@+id/youtubeLinkPreview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:src="@drawable/youtube_preview"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@id/text_block"
         app:layout_constraintStart_toStartOf="@id/text_block"
-        app:layout_constraintTop_toBottomOf="@id/text_block"
-        android:src="@drawable/youtube_preview"/>
+        app:layout_constraintTop_toBottomOf="@id/text_block" />
 
     <ImageButton
         android:id="@+id/play_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/youtubeLinkPreview"
-        app:layout_constraintEnd_toEndOf="@id/youtubeLinkPreview"
-        app:layout_constraintTop_toTopOf="@id/youtubeLinkPreview"
-        app:layout_constraintBottom_toBottomOf="@id/youtubeLinkPreview"
         android:backgroundTint="@android:color/transparent"
+        android:src="@drawable/ic_play_button"
         app:borderWidth="0dp"
-        android:src="@drawable/ic_play_button"/>
+        app:layout_constraintBottom_toBottomOf="@id/youtubeLinkPreview"
+        app:layout_constraintEnd_toEndOf="@id/youtubeLinkPreview"
+        app:layout_constraintStart_toStartOf="@id/youtubeLinkPreview"
+        app:layout_constraintTop_toTopOf="@id/youtubeLinkPreview" />
 
     <TextView
         android:id="@+id/youtubeLink"
@@ -143,30 +143,6 @@
         app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"
         app:srcCompat="@drawable/ic_baseline_eye_24"
         app:tint="#696969" />
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/quantity_of_likes"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="@dimen/action_spacing"-->
-    <!--        app:layout_constraintStart_toEndOf="@id/button_of_likes"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"-->
-
-    <!--        tools:text="10"-->
-
-    <!--        />-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/quantity_of_shares"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="@dimen/action_spacing"-->
-    <!--        app:layout_constraintStart_toEndOf="@id/button_of_shares"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"-->
-    <!--        tools:text="5"-->
-
-
-    <!--        />-->
 
     <TextView
         android:id="@+id/quantity_of_views"

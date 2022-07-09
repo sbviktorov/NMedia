@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import ru.netology.nmedia.databinding.IntentHandlerActivityBinding
 
-class IntentHandlerActivity: AppCompatActivity() {
+class IntentHandlerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -19,7 +19,7 @@ class IntentHandlerActivity: AppCompatActivity() {
         if (text.isNullOrBlank()) return
 
         Snackbar.make(binding.root, text, Snackbar.LENGTH_INDEFINITE)
-            .setAction(android.R.string.ok) {finish()}
+            .setAction(android.R.string.ok) { finish() }
             .setTextMaxLines(6)
             .show()
 

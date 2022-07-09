@@ -26,35 +26,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.fab.setOnClickListener {
             viewModel.onAddClicked()
-//            with(binding.postsRecyclerView) {   // .contentEditText
-//                val content = text.toString()
-//                val isContent = viewModel.onSaveButtonClicked(content)
-//                if (!isContent) Toast.makeText(
-//                    applicationContext,
-//                    context.getString(R.string.empty_content),
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }
         }
-
-//        binding.cancelEditButton.setOnClickListener {
-//            viewModel.onCancelEditButtonClicked()
-//        }
-//        viewModel.currentPost.observe(this) { currentPost ->
-//            with(binding.contentEditText) {
-//                val content = currentPost?.text
-//                setText(content)
-//                if (content != null) {
-//                    binding.lastContent.text = currentPost.text
-//                    binding.editToolGroup.visibility = View.VISIBLE
-//                    requestFocus()
-//                } else {
-//                    clearFocus()
-//                    binding.editToolGroup.visibility = View.GONE
-//                    hideKeyboard()
-//                }
-//            }
-//        }
 
         viewModel.sharePostContent.observe(this) { postContent ->
             val intent = Intent().apply {
@@ -77,11 +49,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-//        val postContentActivityLauncher =
-//            registerForActivityResult(PostContentActivity.ResultContract) { postContent ->
-//                postContent ?: return@registerForActivityResult
-//                viewModel.onSaveButtonClicked(postContent)
-//            }
         val postContentActivityLauncher = registerForActivityResult(
             PostContentActivity.ResultContract
         ) { postContent: String? ->

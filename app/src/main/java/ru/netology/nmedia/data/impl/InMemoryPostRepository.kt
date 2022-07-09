@@ -153,9 +153,4 @@ class InMemoryPostRepository : PostRepository {
     override fun cancelUpdate() {
         data.value = posts
     }
-//
-//    private fun editPost(post: Post) {
-//        posts = posts.map { if (it.id == post.id) post else it }
-//        data.value = posts
-//    }
 }

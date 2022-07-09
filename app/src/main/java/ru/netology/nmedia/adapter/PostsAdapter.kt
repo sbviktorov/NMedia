@@ -40,16 +40,9 @@ internal class PostsAdapter(
                             true
                         }
                         R.id.edit -> {
-//                            val intent = Intent().apply {
-//                                action = Intent.ACTION_SEND
-//                                putExtra(Intent.EXTRA_TEXT, post.text) //post.text
-//                                type = "text/plain"
-//                            }
-
                             interactionListener.onEditClicked(post)
                             true
                         }
-
                         else -> false
                     }
                 }
