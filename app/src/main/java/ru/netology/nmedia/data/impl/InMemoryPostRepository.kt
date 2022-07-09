@@ -20,7 +20,7 @@ class InMemoryPostRepository : PostRepository {
             likes = Likes(count = 0, userLikes = false),
             reposts = 0,
             views = 0,
-            youtubeLink = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
+            video = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
         ),
         Post(
             id = nextID++,
@@ -153,9 +153,9 @@ class InMemoryPostRepository : PostRepository {
     override fun cancelUpdate() {
         data.value = posts
     }
-
-    private fun editPost(post: Post) {
-        posts = posts.map { if (it.id == post.id) post else it }
-        data.value = posts
-    }
+//
+//    private fun editPost(post: Post) {
+//        posts = posts.map { if (it.id == post.id) post else it }
+//        data.value = posts
+//    }
 }

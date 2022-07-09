@@ -11,6 +11,6 @@ data class Post(
     val likes: Likes = Likes(),
     var reposts: Int = 0,
     val views: Int = 0,
-    val youtubeLink: String? = null
+    val video: String? = null
 ) {
 }

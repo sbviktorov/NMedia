@@ -13,6 +13,7 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     private val ownerName = "Нетология. Университет интернет-профессий"
 
     val sharePostContent = SingleLiveEvent<String>()
+    val youtubeURL = SingleLiveEvent<String>()
 //    val navigateToPostContentScreenEvent = SingleLiveEvent<Unit>()
     val navigateToPostContentScreenEvent = SingleLiveEvent<String?>()
 
@@ -58,6 +59,10 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     override fun onCancelEditButtonClicked() {
         repository.cancelUpdate()
         currentPost.value = null
+    }
+
+    override fun onPlayButtonClicked(post: Post) {
+        youtubeURL.value = post.video!!
     }
 
 

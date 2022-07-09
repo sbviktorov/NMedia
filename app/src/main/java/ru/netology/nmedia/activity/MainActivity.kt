@@ -1,9 +1,10 @@
 package ru.netology.nmedia.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
@@ -65,6 +66,15 @@ class MainActivity : AppCompatActivity() {
             val shareIntent =
                 Intent.createChooser(intent, getString(R.string.chooser_share_post))
             startActivity(shareIntent)
+        }
+        viewModel.youtubeURL.observe(this) { youtubeURL ->
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(youtubeURL)
+                )
+            )
+
         }
 
 //        val postContentActivityLauncher =

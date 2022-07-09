@@ -44,15 +44,14 @@
         tools:text="21 мая в 18:36" />
 
     <com.google.android.material.button.MaterialButton
-        style="@style/Widget.AppTheme.OptionsButton"
         android:id="@+id/options_of_post"
+        style="@style/Widget.AppTheme.OptionsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/options_of_post"
         app:icon="@drawable/ic_options_drawable_selector"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/avatar"
-        />
+        app:layout_constraintTop_toTopOf="@id/avatar" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/header_barrier"
@@ -72,12 +71,43 @@
         tools:text="Привет, это новая Нетология!\n\nКогда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов.
 \n\nНо самое важное остаётся с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия — помочь встать на путь роста и начать цепочку перемен → http://netolo.gy/fyb" />
 
+    <ImageView
+        android:id="@+id/youtubeLinkPreview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@id/text_block"
+        app:layout_constraintStart_toStartOf="@id/text_block"
+        app:layout_constraintTop_toBottomOf="@id/text_block"
+        android:src="@drawable/youtube_preview"/>
+
+    <ImageButton
+        android:id="@+id/play_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/youtubeLinkPreview"
+        app:layout_constraintEnd_toEndOf="@id/youtubeLinkPreview"
+        app:layout_constraintTop_toTopOf="@id/youtubeLinkPreview"
+        app:layout_constraintBottom_toBottomOf="@id/youtubeLinkPreview"
+        android:backgroundTint="@android:color/transparent"
+        app:borderWidth="0dp"
+        android:src="@drawable/ic_play_button"/>
+
+    <TextView
+        android:id="@+id/youtubeLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#00008b"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/youtubeLinkPreview"
+        tools:text="youtube link" />
+
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier_for_actions"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="text_block" />
+        app:constraint_referenced_ids="youtubeLink" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_of_likes"
@@ -143,12 +173,11 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:gravity="center"
+        app:circularflow_viewCenter="@drawable/ic_baseline_eye_24"
+        app:layout_constraintBottom_toBottomOf="@id/button_of_views"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier_for_actions"
-        app:layout_constraintBottom_toBottomOf="@id/button_of_views"
-        app:circularflow_viewCenter="@drawable/ic_baseline_eye_24"
-        tools:text="5"
-        />
+        tools:text="5" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
