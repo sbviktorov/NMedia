@@ -87,9 +87,7 @@ internal class PostsAdapter(
                 buttonOfShares.text = post.reposts.toString()
                 quantityOfViews.text = post.views.toString()
                 buttonOfLikes.text =
-//                    activitiesCountFormat(post.likes.count)
                     activitiesCountFormat(post.likesCount)
-//                buttonOfLikes.isChecked = post.likes.userLikes
                 buttonOfLikes.isChecked = post.userLikes
 
             }
@@ -113,5 +111,4 @@ internal class PostsAdapter(
         override fun areContentsTheSame(oldItem: Post, newItem: Post) =
             oldItem == newItem
     }
-
 }

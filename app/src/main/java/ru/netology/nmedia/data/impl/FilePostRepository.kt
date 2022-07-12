@@ -95,7 +95,8 @@ class FilePostRepository(
             "Data value should not be null"
         }
         set(value) {
-            application.openFileOutput(FILE_NAME, Context.MODE_PRIVATE
+            application.openFileOutput(
+                FILE_NAME, Context.MODE_PRIVATE
             ).bufferedWriter().use {
                 it.write(gson.toJson(value))
             }
@@ -110,7 +111,8 @@ class FilePostRepository(
         val posts: List<Post> = if (postsFile.exists()) {
             val inputStream = application.openFileInput(FILE_NAME)
             val reader = inputStream.bufferedReader()
-            reader.use {gson.fromJson(it, type)
+            reader.use {
+                gson.fromJson(it, type)
             }
         } else standardPosts
         data = MutableLiveData(posts)

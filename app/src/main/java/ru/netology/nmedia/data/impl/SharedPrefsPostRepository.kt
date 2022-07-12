@@ -33,7 +33,6 @@ class SharedPrefsPostRepository(
             id = nextID++,
             ownerName = ownerName,
             text = "Задача YouTube Video",
-//            likes = Likes(count = 0, userLikes = false),
             reposts = 0,
             views = 0,
             video = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
