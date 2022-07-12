@@ -1,8 +1,5 @@
 package ru.netology.nmedia.adapter
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +12,6 @@ import ru.netology.nmedia.databinding.PostListItemBinding
 import ru.netology.nmedia.socialNetwork.Post
 import ru.netology.nmedia.socialNetwork.calculations.activitiesCountFormat
 import ru.netology.nmedia.socialNetwork.calculations.dateFormatting
-import java.io.IOException
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.URL
 
 
 internal class PostsAdapter(
@@ -94,8 +87,8 @@ internal class PostsAdapter(
                 buttonOfShares.text = post.reposts.toString()
                 quantityOfViews.text = post.views.toString()
                 buttonOfLikes.text =
-                    activitiesCountFormat(post.likes.count)
-                buttonOfLikes.isChecked = post.likes.userLikes
+                    activitiesCountFormat(post.likesCount)
+                buttonOfLikes.isChecked = post.userLikes
 
             }
         }
@@ -118,5 +111,4 @@ internal class PostsAdapter(
         override fun areContentsTheSame(oldItem: Post, newItem: Post) =
             oldItem == newItem
     }
-
 }

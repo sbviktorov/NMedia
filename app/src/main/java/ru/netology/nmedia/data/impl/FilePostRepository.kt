@@ -1,17 +1,34 @@
 package ru.netology.nmedia.data.impl
 
+import android.app.Application
+import android.content.Context
+import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import ru.netology.nmedia.socialNetwork.Post
 import ru.netology.nmedia.data.PostRepository
+import kotlin.properties.Delegates
 
-class InMemoryPostRepository : PostRepository {
+class FilePostRepository(
+    private val application: Application
+) : PostRepository {
 
+    private val gson = Gson()
+    private val type = TypeToken.getParameterized(List::class.java, Post::class.java).type
+    private val prefs = application.getSharedPreferences(
+        "repo", Context.MODE_PRIVATE
+    )
     private val ownerName = "Нетология. Университет интернет-профессий"
 
-    private var nextID: Long = 0
+    private var nextID: Long by Delegates.observable(
+        prefs.getLong(NEXT_ID_PREFS_KEY, 0L)
+    ) { _, _, newValue ->
+        prefs.edit { putLong(NEXT_ID_PREFS_KEY, newValue) }
+    }
 
-    private var standartPosts = listOf<Post>(
+    private var standardPosts = listOf<Post>(
         Post(
             id = nextID++,
             ownerName = ownerName,
@@ -73,33 +90,40 @@ class InMemoryPostRepository : PostRepository {
         )
     )
 
-    private val additionalPosts = List(20) {
-        Post(
-            id = nextID++,
-            ownerName = ownerName,
-            text = "some text. id of additionalPosts= ${nextID - 1}",
-            likesCount = listOf<Int>(
-                0,
-                999,
-                1_099,
-                9_999,
-                999_999,
-                1_199_999,
-                1_999_999,
-                9_999_999
-            ).random()
-        )
+    private var posts
+        get() = checkNotNull(data.value) {
+            "Data value should not be null"
+        }
+        set(value) {
+            application.openFileOutput(
+                FILE_NAME, Context.MODE_PRIVATE
+            ).bufferedWriter().use {
+                it.write(gson.toJson(value))
+            }
+            data.value = value
+        }
+
+    private val data: MutableLiveData<List<Post>>
+
+
+    init {
+        val postsFile = application.filesDir.resolve(FILE_NAME)
+        val posts: List<Post> = if (postsFile.exists()) {
+            val inputStream = application.openFileInput(FILE_NAME)
+            val reader = inputStream.bufferedReader()
+            reader.use {
+                gson.fromJson(it, type)
+            }
+        } else standardPosts
+        data = MutableLiveData(posts)
     }
-
-    private var posts = standartPosts.plus(additionalPosts)
-
-    private val data = MutableLiveData(posts)
 
     override fun getAll(): LiveData<List<Post>> = data
 
     override fun likeById(postId: Long) {
         posts = posts.map {
             if (it.id != postId) it else it.copy(
+
                 userLikes = !it.userLikes,
                 likesCount = if (it.userLikes) {
                     it.likesCount - 1
@@ -108,7 +132,6 @@ class InMemoryPostRepository : PostRepository {
                 }
             )
         }
-        data.value = posts
     }
 
     override fun shareById(postId: Long) {
@@ -117,12 +140,10 @@ class InMemoryPostRepository : PostRepository {
                 it.copy(reposts = it.reposts + 1)
             }
         }
-        data.value = posts
     }
 
     override fun deleteById(postId: Long) {
         posts = posts.filterNot { it.id == postId }
-        data.value = posts
     }
 
     override fun save(post: Post) {
@@ -136,15 +157,17 @@ class InMemoryPostRepository : PostRepository {
             )
         )
             .plus(posts)
-        data.value = posts
     }
 
     private fun update(post: Post) {
         posts = posts.map { if (it.id == post.id) post else it }
-        data.value = posts
     }
 
     override fun cancelUpdate() {
-        data.value = posts
+    }
+
+    private companion object {
+        const val NEXT_ID_PREFS_KEY = "posts"
+        const val FILE_NAME = "posts.json"
     }
 }

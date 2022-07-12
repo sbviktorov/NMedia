@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val adapter =
             PostsAdapter(viewModel)
         binding.postsRecyclerView.adapter = adapter
@@ -46,7 +47,6 @@ class MainActivity : AppCompatActivity() {
                     Uri.parse(youtubeURL)
                 )
             )
-
         }
 
         val postContentActivityLauncher = registerForActivityResult(
