@@ -12,7 +12,10 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     val data = repository.getAll()
     private val ownerName = "Нетология. Университет интернет-профессий"
 
-    val currentPost = MutableLiveData<Post?>(null)
+    val sharePostContent = SingleLiveEvent<String>()
+    val youtubeURL = SingleLiveEvent<String>()
+    val navigateToPostContentScreenEvent = SingleLiveEvent<String?>()
+    private val currentPost = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(content: String): Boolean {
         if (content.isBlank()) {
@@ -22,7 +25,6 @@ class PostViewModel : ViewModel(), PostInteractionListener {
             text = content
         )
             ?: Post(
-
                 id = PostRepository.newPostID,
                 ownerName = ownerName,
                 text = content
@@ -32,17 +34,30 @@ class PostViewModel : ViewModel(), PostInteractionListener {
         return true
     }
 
+    fun onAddClicked() {
+        navigateToPostContentScreenEvent.value = null
+    }
+
     // region PostInteractionListener
     override fun onButtonOfLikesClicked(post: Post) = repository.likeById(post.id)
-    override fun onButtonOfSharesClicked(post: Post) = repository.shareById(post.id)
+    override fun onButtonOfSharesClicked(post: Post) {
+        sharePostContent.value = post.text
+        repository.shareById(post.id)
+    }
+
     override fun onRemoveClicked(post: Post) = repository.deleteById(post.id)
     override fun onEditClicked(post: Post) {
         currentPost.value = post
+        navigateToPostContentScreenEvent.value = post.text
     }
 
     override fun onCancelEditButtonClicked() {
         repository.cancelUpdate()
         currentPost.value = null
+    }
+
+    override fun onPlayButtonClicked(post: Post) {
+        youtubeURL.value = post.video!!
     }
 //    endregion PostInteractionListener
 }
