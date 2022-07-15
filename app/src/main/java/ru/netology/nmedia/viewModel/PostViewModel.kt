@@ -8,13 +8,16 @@ import ru.netology.nmedia.data.PostRepository
 import ru.netology.nmedia.data.impl.FilePostRepository
 import ru.netology.nmedia.socialNetwork.Post
 
-class PostViewModel(application: Application) : AndroidViewModel(application), PostInteractionListener {
-private val repository: PostRepository = FilePostRepository(application)
+class PostViewModel(application: Application) : AndroidViewModel(application),
+    PostInteractionListener {
+    private val repository: PostRepository = FilePostRepository(application)
     val data = repository.getAll()
     private val ownerName = "Нетология. Университет интернет-профессий"
     val sharePostContent = SingleLiveEvent<String>()
     val youtubeURL = SingleLiveEvent<String>()
-    val navigateToPostContentScreenEvent = SingleLiveEvent<String?>()
+
+    //    val navigateToPostContentScreenEvent = SingleLiveEvent<String?>()
+    val navigateToPostContentScreenEvent = SingleLiveEvent<String>()
     private val currentPost = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(content: String): Boolean {
