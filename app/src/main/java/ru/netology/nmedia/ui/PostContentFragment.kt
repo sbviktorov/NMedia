@@ -12,8 +12,11 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.navigation.NavArgs
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import ru.netology.nmedia.R
-import ru.netology.nmedia.databinding.PostContentActivityBinding
+import ru.netology.nmedia.databinding.PostContentFragmentBinding
 
 class PostContentFragment
 //    (
@@ -21,8 +24,10 @@ class PostContentFragment
 //)
     : Fragment() {
 
-    private val initialContent
-        get()= requireArguments().getString(INITIAL_CONTENT_ARGUMENTS_KEY)
+    private val  args by navArgs<PostContentFragmentArgs>()
+//        args.initialContent
+//    }
+//        get()= requireArguments().getString(INITIAL_CONTENT_ARGUMENTS_KEY)
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
 //        val binding = PostContentActivityBinding.inflate(layoutInflater)
@@ -57,21 +62,21 @@ class PostContentFragment
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = PostContentActivityBinding.inflate(layoutInflater, container, false).also { binding ->
+    ) = PostContentFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
 //        var textContent = ""
 //        if (intent.hasExtra(POST_CONTENT_KEY)) {
 //            textContent = intent.getStringExtra(POST_CONTENT_KEY).toString()
 //        }
 
 //        binding.edit.setText(textContent)
-        binding.edit.setText(initialContent)
+        binding.edit.setText(args.initialContent)
         binding.edit.requestFocus()
         binding.ok.setOnClickListener {
             onOkButtonClicked(binding)
         }
     }.root
 
-    private fun onOkButtonClicked(binding: PostContentActivityBinding) {
+    private fun onOkButtonClicked(binding: PostContentFragmentBinding) {
 //        val intent = Intent()
         val text = binding.edit.text
         if (!text.isNullOrBlank()) {
@@ -79,6 +84,8 @@ class PostContentFragment
             resultBundle.putString(RESULT_KEY, text.toString())
             setFragmentResult(REQUEST_KEY, resultBundle)
         }
+//        parentFragmentManager.popBackStack()
+        findNavController().popBackStack()
 //        if (text.isNullOrBlank()) {
 //            setResult(Activity.RESULT_CANCELED, intent)
 //            Toast.makeText(
@@ -109,14 +116,15 @@ class PostContentFragment
 //    }
 
     companion object {
-        private const val INITIAL_CONTENT_ARGUMENTS_KEY = "initialContent"
+//        private const val INITIAL_CONTENT_ARGUMENTS_KEY = "initialContent"
         const val REQUEST_KEY = "requestKey"
         const val RESULT_KEY = "postNewContent"
         const val POST_CONTENT_KEY = "postContent"
 
-        fun create(initialContent: String?) = PostContentFragment().apply {
-            arguments =
-                Bundle(1).also { it.putString(INITIAL_CONTENT_ARGUMENTS_KEY, initialContent) }
-        }
+//        fun create(initialContent: String?) = PostContentFragment().apply {
+//            arguments = createBundle(initialContent)
+//        }
+//        fun createBundle(initialContent: String?) = Bundle(1).apply {
+//            putString(INITIAL_CONTENT_ARGUMENTS_KEY, initialContent)}
     }
 }

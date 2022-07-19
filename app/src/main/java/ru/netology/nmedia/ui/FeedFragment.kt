@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostsAdapter
-import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.databinding.FeedFragmentBinding
 import ru.netology.nmedia.viewModel.PostViewModel
 
 class FeedFragment : Fragment() {
@@ -69,12 +70,15 @@ class FeedFragment : Fragment() {
 //            postContent?.let(viewModel::onSaveButtonClicked) ?: return@registerForActivityResult
 //        }
         viewModel.navigateToPostContentScreenEvent.observe(this) { initialContent ->
+            val direction = FeedFragmentDirections.toPostContentFragment(initialContent)
 //            postContentActivityLauncher.launch(it)
-            parentFragmentManager.commit {
-                val fragment = PostContentFragment.create(initialContent)
-                replace(R.id.fragmentContainer, fragment)
-                addToBackStack(null)
-            }
+            findNavController().navigate(direction)
+//            parentFragmentManager.commit {
+//                val fragment = PostContentFragment.create(initialContent)
+//                replace(R.id.fragmentContainer, fragment)
+//                addToBackStack(null)
+//            }
+
         }
     }
 
@@ -82,7 +86,7 @@ class FeedFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = ActivityMainBinding.inflate(layoutInflater, container, false).also {binding ->
+    ) = FeedFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
 
         val adapter =
             PostsAdapter(viewModel)
@@ -95,6 +99,10 @@ class FeedFragment : Fragment() {
         }
     //        return super.onCreateView(inflater, container, savedInstanceState)
     }.root
+
+    companion object {
+        const val TAG = "feed fragment"
+    }
 }
 
 
