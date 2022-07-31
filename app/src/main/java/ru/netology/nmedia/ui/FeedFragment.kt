@@ -16,26 +16,11 @@ import ru.netology.nmedia.databinding.FeedFragmentBinding
 import ru.netology.nmedia.viewModel.PostViewModel
 
 class FeedFragment : Fragment() {
-//class MainActivity : AppCompatActivity() {
-
-
 
     private val viewModel by viewModels<PostViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val binding = ActivityMainBinding.inflate(layoutInflater)
-        //setContentView(binding.root)
-
-//        val adapter =
-//            PostsAdapter(viewModel)
-//        binding.postsRecyclerView.adapter = adapter
-//        viewModel.data.observe(this) { posts ->
-//            adapter.submitList(posts)
-//        }
-//        binding.fab.setOnClickListener {
-//            viewModel.onAddClicked()
-//        }
 
         viewModel.sharePostContent.observe(this) { postContent ->
             val intent = Intent().apply {
@@ -57,28 +42,22 @@ class FeedFragment : Fragment() {
             )
         }
 
-        setFragmentResultListener(requestKey = PostContentFragment.REQUEST_KEY) {
-            requestKey, bundle ->
+        setFragmentResultListener(requestKey = PostContentFragment.REQUEST_KEY) { requestKey, bundle ->
             if (requestKey != PostContentFragment.REQUEST_KEY) return@setFragmentResultListener
-            val newPostContent = bundle.getString(PostContentFragment.RESULT_KEY
+            val newPostContent = bundle.getString(
+                PostContentFragment.RESULT_KEY
             ) ?: return@setFragmentResultListener
             viewModel.onSaveButtonClicked(newPostContent)
         }
-//        val postContentActivityLauncher = registerForActivityResult(
-//            PostContentFragment.ResultContract
-//        ) { postContent: String? ->
-//            postContent?.let(viewModel::onSaveButtonClicked) ?: return@registerForActivityResult
-//        }
+
         viewModel.navigateToPostContentScreenEvent.observe(this) { initialContent ->
             val direction = FeedFragmentDirections.toPostContentFragment(initialContent)
-//            postContentActivityLauncher.launch(it)
             findNavController().navigate(direction)
-//            parentFragmentManager.commit {
-//                val fragment = PostContentFragment.create(initialContent)
-//                replace(R.id.fragmentContainer, fragment)
-//                addToBackStack(null)
-//            }
+        }
 
+        viewModel.navigateToPostScreenEvent.observe(this) {initialPostId ->
+            val direction = FeedFragmentDirections.toPostFragment(initialPostId)
+            findNavController().navigate(direction)
         }
     }
 
@@ -97,7 +76,6 @@ class FeedFragment : Fragment() {
         binding.fab.setOnClickListener {
             viewModel.onAddClicked()
         }
-    //        return super.onCreateView(inflater, container, savedInstanceState)
     }.root
 
     companion object {

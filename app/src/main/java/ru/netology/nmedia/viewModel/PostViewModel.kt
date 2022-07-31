@@ -18,6 +18,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application),
 
     //    val navigateToPostContentScreenEvent = SingleLiveEvent<String?>()
     val navigateToPostContentScreenEvent = SingleLiveEvent<String>()
+    val navigateToPostScreenEvent = SingleLiveEvent<Long>()
     private val currentPost = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(content: String): Boolean {
@@ -61,6 +62,11 @@ class PostViewModel(application: Application) : AndroidViewModel(application),
 
     override fun onPlayButtonClicked(post: Post) {
         youtubeURL.value = post.video!!
+    }
+
+    override fun onPostAreaClicked(post: Post) {
+//        currentPost.value = post
+        navigateToPostScreenEvent.value = post.id
     }
 //    endregion PostInteractionListener
 }

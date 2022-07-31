@@ -61,6 +61,10 @@ internal class PostsAdapter(
             binding.youtubeLinkPreview.setOnClickListener {
                 interactionListener.onPlayButtonClicked(post)
             }
+            binding.postArea.setOnClickListener {
+                interactionListener.onPostAreaClicked(post)
+            }
+//            postNavigateArea.setOnClickListener { listener.onPostNavigateAreaClick(post.id) }
         }
 
         fun bind(post: Post) {
@@ -70,7 +74,6 @@ internal class PostsAdapter(
                 authorName.text = post.ownerName
                 dateOfPost.text = dateFormatting(post.date)
                 textBlock.text = post.text
-//                youtubeLinkPreview.setImageResource()
                 if (post.video.isNullOrBlank()) {
                     youtubeLinkPreview.setImageDrawable(null)
                     youtubeLinkPreview.visibility = View.GONE
