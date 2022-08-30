@@ -6,67 +6,67 @@ import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.adapter.PostInteractionListener
 import ru.netology.nmedia.data.PostRepository
 import ru.netology.nmedia.data.impl.FilePostRepository
-import ru.netology.nmedia.socialNetwork.Post
+import ru.netology.nmedia.data.impl.SharedPrefsPostRepository
+import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.util.SingleLiveEvent
 
-class PostViewModel(application: Application) : AndroidViewModel(application),
-    PostInteractionListener {
+class PostViewModel(
+    application: Application
+) : AndroidViewModel(application), PostInteractionListener {
     private val repository: PostRepository = FilePostRepository(application)
-    val data = repository.getAll()
-    private val ownerName = "Нетология. Университет интернет-профессий"
-    val sharePostContent = SingleLiveEvent<String>()
-    val youtubeURL = SingleLiveEvent<String>()
+    val data by repository::data
 
-    //    val navigateToPostContentScreenEvent = SingleLiveEvent<String?>()
-    val navigateToPostContentScreenEvent = SingleLiveEvent<String>()
-    val navigateToPostScreenEvent = SingleLiveEvent<Long>()
+    val sharePostContent = SingleLiveEvent<String>()
+    val viewVideoContent = SingleLiveEvent<String>()
+    val navigateToPostContentScreenEvent = SingleLiveEvent<String?>()
+
     private val currentPost = MutableLiveData<Post?>(null)
 
-    fun onSaveButtonClicked(content: String): Boolean {
+    fun onSaveButtonClicked(content: String) {
         if (content.isBlank()) {
-            return false
+            return
         }
-        val post = currentPost.value?.copy(
-            text = content
+        val post = currentPost.value?.copy( // edit
+            content = content
+        ) ?: Post( // new
+            id = PostRepository.NEW_POST_ID,
+            author = "Me",
+            content = content,
+            published = "Today",
+            video = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
         )
-            ?: Post(
-                id = PostRepository.newPostID,
-                ownerName = ownerName,
-                text = content
-            )
         repository.save(post)
         currentPost.value = null
-        return true
     }
 
-    fun onAddClicked() {
+    //region PostInteractionListener
+
+    override fun onLikeClicked(post: Post) =
+        repository.like(post.id)
+
+    override fun onShareClicked(post: Post) {
+        sharePostContent.value = post.content
+        repository.share(post.id)
+    }
+
+    override fun onPlayClicked(post: Post) {
+        viewVideoContent.value = post.video
+    }
+
+    override fun onRemoveClicked(post: Post) =
+        repository.delete(post.id)
+
+    override fun onAddClicked() {
         navigateToPostContentScreenEvent.value = null
     }
 
-    // region PostInteractionListener
-    override fun onButtonOfLikesClicked(post: Post) = repository.likeById(post.id)
-    override fun onButtonOfSharesClicked(post: Post) {
-        sharePostContent.value = post.text
-        repository.shareById(post.id)
-    }
-
-    override fun onRemoveClicked(post: Post) = repository.deleteById(post.id)
     override fun onEditClicked(post: Post) {
+        navigateToPostContentScreenEvent.value = post.content
         currentPost.value = post
-        navigateToPostContentScreenEvent.value = post.text
     }
 
-    override fun onCancelEditButtonClicked() {
-        repository.cancelUpdate()
+    override fun onCancelEditClicked() {
         currentPost.value = null
     }
-
-    override fun onPlayButtonClicked(post: Post) {
-        youtubeURL.value = post.video!!
-    }
-
-    override fun onPostAreaClicked(post: Post) {
-//        currentPost.value = post
-        navigateToPostScreenEvent.value = post.id
-    }
-//    endregion PostInteractionListener
+    //endregion InteractionListener
 }

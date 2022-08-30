@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/common_spacing"
+    tools:context=".activity.MainActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/post_avatar_size"
+        android:layout_height="@dimen/post_avatar_size"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/avatar_description"
+        android:padding="@dimen/standard_padding_size"
+        android:src="@drawable/netology_avatar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="@dimen/font_post"
+        app:layout_constraintBottom_toTopOf="@id/date"
+        app:layout_constraintEnd_toStartOf="@id/menu"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="@id/avatar"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Нетология. 33333333333Университет интернет-професий" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="@dimen/font_post"
+        app:layout_constraintBottom_toBottomOf="@id/avatar"
+        app:layout_constraintEnd_toEndOf="@id/textTitle"
+        app:layout_constraintStart_toStartOf="@id/textTitle"
+        app:layout_constraintTop_toBottomOf="@id/textTitle"
+        tools:text="28 апреля 2022 года в 22:20" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/menu"
+        style="@style/Widget.AppTheme.StandartButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:icon="@drawable/ic_options_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/header_barrier"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="avatar, date, menu" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textOfPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.4"
+        android:singleLine="false"
+        android:textSize="@dimen/font_post"
+        app:layout_constraintTop_toBottomOf="@id/header_barrier"
+        tools:text="text" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewVideo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/black"
+        android:src="@drawable/youtube_preview"
+        app:layout_constraintTop_toBottomOf="@id/textOfPost"
+        tools:layout_editor_absoluteX="12dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/playButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:alpha="0.72"
+        android:foregroundGravity="center"
+        android:contentDescription="@string/play_video"
+        android:foreground="@drawable/ic_play_button_white_84dp"
+        app:backgroundTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewVideo"
+        app:layout_constraintEnd_toEndOf="@id/imageViewVideo"
+        app:layout_constraintStart_toStartOf="@id/imageViewVideo"
+        app:layout_constraintTop_toTopOf="@id/imageViewVideo" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/footer_barrier"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="imageViewVideo" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/like"
+        style="@style/Widget.AppTheme.LikeCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:checkable="true"
+        android:textAlignment="textStart"
+        app:icon="@drawable/ic_like_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/footer_barrier"
+        tools:text="200000" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/sharePost"
+        style="@style/Widget.AppTheme.StandartButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:textAlignment="textStart"
+        app:icon="@drawable/ic_share_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/like"
+        app:layout_constraintStart_toEndOf="@id/like"
+        app:layout_constraintTop_toTopOf="@id/like"
+        tools:text="200000" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/view"
+        style="@style/Widget.AppTheme.StandartButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:textAlignment="textStart"
+        app:icon="@drawable/ic_views_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/like"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/like"
+        tools:text="20000" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,13 @@
 package ru.netology.nmedia.adapter
 
-import ru.netology.nmedia.socialNetwork.Post
+import ru.netology.nmedia.dto.Post
 
 interface PostInteractionListener {
-    fun onButtonOfLikesClicked(post: Post)
-    fun onButtonOfSharesClicked(post: Post)
+    fun onLikeClicked(post: Post)
+    fun onShareClicked(post: Post)
     fun onRemoveClicked(post: Post)
+    fun onAddClicked()
     fun onEditClicked(post: Post)
-    fun onCancelEditButtonClicked()
-    fun onPlayButtonClicked(post: Post)
-    fun onPostAreaClicked(post: Post)
+    fun onCancelEditClicked()
+    fun onPlayClicked(post: Post)
 }

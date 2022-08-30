@@ -1,18 +1,17 @@
 <resources>
-    <string name="app_name">NMedia</string>
-    <string name="greetings">NMedia!</string>
-    <string name="description_of_author">Author\'s avatar</string>
-    <string name="options_of_post">options_of_post</string>
-    <string name="button_of_likes">button_of_likes</string>
-    <string name="button_of_shares">button_of_shares</string>
-    <string name="button_of_views">button_of_views</string>
-    <string name="preposition" translatable="false">at</string>
+    <string name="app_name" translatable="false">NMedia</string>
+    <string name="avatar_description">Author avatar</string>
     <string name="remove">Remove</string>
-    <string name="post_text">Post text</string>
-    <string name="menu_edit">Edit</string>
-    <string name="empty_content">Content can\'t be empty</string>
+    <string name="postText">input post\'s text here</string>
+    <string name="description_save">Save new post</string>
+    <string name="edit">Edit</string>
+    <string name="empty_content_toast">Content can\'t be empty</string>
+    <string name="edit_title">Edit message</string>
+    <string name="cancel_edit">Cancel edit</string>
+    <string name="editing_text">Editing text</string>
     <string name="chooser_share_post">Share post</string>
-    <string name="description_post_save">Save</string>
     <string name="add_post">Add post</string>
-
+    <string name="description_post_save">Save post to add in list</string>
+    <string name="play_video">Play video</string>
+    <string name="play_video_post">Play video post</string>
 </resources>

@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package ru.netology.nmedia.viewModel
+package ru.netology.nmedia.util
 
 import android.util.Log
 import androidx.annotation.MainThread
