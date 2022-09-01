@@ -4,8 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.adapter.PostInteractionListener
+import ru.netology.nmedia.data.DraftRepository
 import ru.netology.nmedia.data.PostRepository
-import ru.netology.nmedia.data.impl.FilePostRepository
+import ru.netology.nmedia.data.impl.DraftRepositoryImpl
+import ru.netology.nmedia.data.impl.SQLiteRepository
+import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.util.ItemNotFoundExceptions
 import ru.netology.nmedia.util.SingleLiveEvent
@@ -13,8 +16,11 @@ import ru.netology.nmedia.util.SingleLiveEvent
 open class PostViewModel(
     application: Application
 ) : AndroidViewModel(application), PostInteractionListener {
-    private val repository: PostRepository = FilePostRepository(application)
+    private val repository: PostRepository = SQLiteRepository(
+        dao = AppDb.getInstanse(application).postDao
+    )
     val data by repository::data
+    val draft: DraftRepository = DraftRepositoryImpl()
 
     val sharePostContent = SingleLiveEvent<String>()
     val viewVideoContent = SingleLiveEvent<String>()
@@ -63,10 +69,12 @@ open class PostViewModel(
         repository.delete(post.id)
 
     override fun onAddClicked() {
+        draft.unLock()
         navigateToNewPostFragment.value = null
     }
 
     override fun onEditClicked(post: Post) {
+        draft.lock()
         navigateToNewPostFragment.value = post.content
         currentPost.value = post
     }
@@ -82,5 +90,9 @@ open class PostViewModel(
 
     fun deletePostAfterNavigateFromPostFragment(post: Post) {
         navigateAfterOnRemoveClickedFromPostFragment.value = post
+    }
+
+    companion object {
+
     }
 }
